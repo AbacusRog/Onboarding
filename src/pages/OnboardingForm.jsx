@@ -113,14 +113,22 @@ export default function OnboardingForm() {
     return null;
   }
 
-  async function uploadFile(submissionId, file, label) {
+  async function uploadFile(submissionId, file, label, attempt = 1) {
     if (!file) return null;
     const ext = file.name.split(".").pop();
     const path = `${submissionId}/${label}.${ext}`;
     const { error } = await supabase.storage
       .from(DOCUMENTS_BUCKET)
       .upload(path, file);
-    if (error) throw new Error(`Failed to upload ${label}: ${error.message}`);
+    if (error) {
+      // Retry once after a short pause — covers transient/first-request hiccups
+      // rather than failing the whole submission on a one-off blip.
+      if (attempt < 2) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        return uploadFile(submissionId, file, label, attempt + 1);
+      }
+      throw new Error(`Failed to upload ${label}: ${error.message}`);
+    }
     return path;
   }
 
@@ -168,14 +176,14 @@ export default function OnboardingForm() {
     try {
       const submissionId = crypto.randomUUID();
 
-      const [passportPath, drivingLicencePath, addressProofPath, taxReturnPath, latestAccountsPath] =
-        await Promise.all([
-          uploadFile(submissionId, passportFile, "passport"),
-          uploadFile(submissionId, drivingLicenceFile, "driving-licence"),
-          uploadFile(submissionId, addressProofFile, "address-proof"),
-          uploadFile(submissionId, taxReturnFile, "tax-return-and-accounts"),
-          uploadFile(submissionId, latestAccountsFile, "latest-filed-accounts"),
-        ]);
+      // Uploaded one at a time (not all at once) — avoids firing several simultaneous
+      // requests at Supabase Storage, which was intermittently tripping up a random
+      // one of them under concurrent load.
+      const passportPath = await uploadFile(submissionId, passportFile, "passport");
+      const drivingLicencePath = await uploadFile(submissionId, drivingLicenceFile, "driving-licence");
+      const addressProofPath = await uploadFile(submissionId, addressProofFile, "address-proof");
+      const taxReturnPath = await uploadFile(submissionId, taxReturnFile, "tax-return-and-accounts");
+      const latestAccountsPath = await uploadFile(submissionId, latestAccountsFile, "latest-filed-accounts");
 
       const { error } = await supabase.from(SUBMISSIONS_TABLE).insert({
         id: submissionId,
