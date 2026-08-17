@@ -1,0 +1,336 @@
+:root {
+  --navy: #1f3864;
+  --navy-dark: #16294a;
+  --ink: #1f2430;
+  --grey: #64707d;
+  --border: #d8dde3;
+  --bg: #f4f6f9;
+  --error: #b3261e;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  width: 100%;
+  max-width: 640px;
+  height: fit-content;
+}
+
+.card--wide {
+  max-width: 880px;
+}
+
+.card--narrow {
+  max-width: 400px;
+}
+
+.card--centered {
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 28px;
+}
+
+.firm-logo {
+  display: block;
+  max-width: 260px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 24px;
+}
+
+h2 {
+  color: var(--navy);
+  font-size: 17px;
+  margin: 0 0 4px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--navy);
+}
+
+section {
+  margin-top: 32px;
+}
+
+.intro {
+  color: var(--grey);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.field {
+  margin-top: 18px;
+}
+
+.field-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.field-row .field {
+  flex: 1;
+  min-width: 180px;
+}
+
+.field-label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.field-hint {
+  color: var(--grey);
+  font-size: 13px;
+  margin: 0 0 6px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #fff;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(31, 56, 100, 0.12);
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.limited-company-fields {
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: 8px;
+}
+
+.file-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  padding: 24px 16px;
+  cursor: pointer;
+  color: var(--grey);
+  font-size: 14px;
+  transition: border-color 0.15s;
+}
+
+.file-drop:hover {
+  border-color: var(--navy);
+}
+
+.file-drop--filled {
+  border-style: solid;
+  border-color: var(--navy);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.file-drop input[type="file"] {
+  display: none;
+}
+
+.postcode-lookup {
+  background: var(--bg);
+  padding: 14px 16px;
+  border-radius: 8px;
+}
+
+.postcode-lookup__row {
+  display: flex;
+  gap: 10px;
+}
+
+.postcode-lookup__row input {
+  flex: 1;
+  max-width: 200px;
+}
+
+.postcode-lookup__row button {
+  padding: 10px 16px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.postcode-lookup__row button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.postcode-lookup__results {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 15px;
+  background: #fff;
+}
+
+.field-error {
+  color: var(--error);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.field-error--form {
+  margin-top: 20px;
+  padding: 12px 14px;
+  background: #fdecea;
+  border-radius: 6px;
+}
+
+.submit-button {
+  margin-top: 32px;
+  width: 100%;
+  padding: 14px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: var(--navy-dark);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--navy);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submissions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.submissions-table th {
+  text-align: left;
+  font-size: 13px;
+  color: var(--grey);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border);
+}
+
+.submissions-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.submissions-table a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.detail-row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.detail-label {
+  width: 220px;
+  flex-shrink: 0;
+  color: var(--grey);
+  font-weight: 600;
+}
+
+.detail-value {
+  flex: 1;
+}
